@@ -1,0 +1,51 @@
+-- DROP DATABASE delta_fit_gym;
+CREATE DATABASE delta_fit_gym;
+
+CREATE TABLE pessoa
+(
+  cod bigserial NOT NULL PRIMARY KEY,
+  nome character varying(200),
+  cpf char(14),
+  telefone character varying(15) 
+);
+
+CREATE TABLE usuario
+(
+  cod bigserial NOT NULL PRIMARY KEY,
+  email character varying(100) NOT NULL,
+  senha character varying(20) NOT NULL
+);
+
+CREATE TABLE plano
+(
+  cod bigserial NOT NULL PRIMARY KEY,
+  descricao character varying(200) NOT NULL,
+  valor numeric(6,2) NOT NULL
+);
+
+CREATE TABLE cliente
+(
+  cod bigserial NOT NULL PRIMARY KEY,
+  cod_pessoa bigint REFERENCES pessoa (cod) NOT NULL,
+  cod_usuario bigint REFERENCES usuario (cod) NOT NULL,
+  dh_cadastro date default now(),
+  cod_plano bigint REFERENCES plano (cod) NOT NULL
+);
+
+CREATE TABLE funcionario
+(
+  cod bigserial NOT NULL PRIMARY KEY,
+  cod_pessoa bigint REFERENCES pessoa (cod) NOT NULL,
+  cod_usuario bigint REFERENCES usuario (cod) NOT NULL,
+  dh_contrato date default now(),
+  salario numeric(10,2) NOT NULL
+);
+
+CREATE TABLE pagamento
+(
+  cod bigserial NOT NULL PRIMARY KEY,
+  cod_cliente bigint REFERENCES cliente (cod) NOT NULL,
+  dh_registro date default now(),
+  valor numeric(16,2) NOT NULL,
+  status character varying(20) CHECK (status in ('PENDENTE', 'ATRASADO', 'EFETIVADO')) NOT NULL
+);
