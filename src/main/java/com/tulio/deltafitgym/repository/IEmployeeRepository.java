@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.tulio.deltafitgym.model.Employee;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Long>{
+public interface IEmployeeRepository extends JpaRepository<Employee, Long>{
 
 }

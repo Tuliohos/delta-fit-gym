@@ -23,29 +23,28 @@ CREATE TABLE plano
   valor numeric(6,2) NOT NULL
 );
 
-CREATE TABLE cliente
+CREATE TABLE membro
 (
   cod bigserial NOT NULL PRIMARY KEY,
-  cod_pessoa bigint REFERENCES pessoa (cod) NOT NULL,
-  cod_usuario bigint REFERENCES usuario (cod) NOT NULL,
-  dh_cadastro date default now(),
+  cod_pessoa bigint REFERENCES pessoa (cod),
+  dh_cadastro timestamp(0) without time zone default now(),
   cod_plano bigint REFERENCES plano (cod) NOT NULL
 );
 
 CREATE TABLE funcionario
 (
   cod bigserial NOT NULL PRIMARY KEY,
-  cod_pessoa bigint REFERENCES pessoa (cod) NOT NULL,
-  cod_usuario bigint REFERENCES usuario (cod) NOT NULL,
-  dh_contrato date default now(),
+  cod_pessoa bigint REFERENCES pessoa (cod),
+  cod_usuario bigint REFERENCES usuario (cod),
+  dh_contrato timestamp(0) without time zone default now(),
   salario numeric(10,2) NOT NULL
 );
 
 CREATE TABLE pagamento
 (
   cod bigserial NOT NULL PRIMARY KEY,
-  cod_cliente bigint REFERENCES cliente (cod) NOT NULL,
-  dh_registro date default now(),
+  cod_membro bigint REFERENCES membro (cod) NOT NULL,
+  dh_registro timestamp(0) without time zone default now(),
   valor numeric(16,2) NOT NULL,
-  status character varying(20) CHECK (status in ('PENDENTE', 'ATRASADO', 'EFETIVADO')) NOT NULL
+  status smallint NOT NULL
 );

@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.tulio.deltafitgym.model.Membership;
 
-public interface MembershipRepository extends JpaRepository<Membership, Long>{
+public interface IMembershipRepository extends JpaRepository<Membership, Long>{
+	
+	public Boolean existsByDescription(String description);
 
 }

@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum EnumPaymentStatus {
-	PENDING("PENDENTE"),
-	lATE("ATRASADO"), 
-	EFFECTIVE("EFETIVADO");
+	PENDING(0),
+	EFFECTIVE(1),
+	LATE(2),
+	CANCELED(3);
 	
-	private String value;
+	private Integer value;
 	
-	public String getValue() { return this.value; }
+	public Integer getValue() { return this.value; }
 }

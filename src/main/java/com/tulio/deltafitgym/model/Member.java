@@ -1,10 +1,9 @@
 package com.tulio.deltafitgym.model;
 
-import java.math.BigInteger;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,28 +23,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="client")
-public class Customer {
+@Table(name="membro")
+public class Member {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod")
-	private BigInteger cod;
+	private Long cod;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="cod_pessoa")
 	private Person person;
-	
-	@OneToOne
-	@JoinColumn(name="cod_usuario")
-	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name="cod_plano")
 	private Membership membership;
 	
-	@Column(name = "data_cadastro")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+	@Column(name = "dh_cadastro")
 	private Date dateTimeRegistration;
 	
 }

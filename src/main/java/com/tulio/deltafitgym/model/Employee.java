@@ -1,9 +1,9 @@
 package com.tulio.deltafitgym.model;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -32,13 +32,13 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod")
-	private BigInteger cod;
+	private Long cod;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="cod_pessoa")
 	private Person person;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="cod_usuario")
 	private User user;
 	

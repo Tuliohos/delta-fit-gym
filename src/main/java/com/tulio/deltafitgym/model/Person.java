@@ -1,7 +1,5 @@
 package com.tulio.deltafitgym.model;
 
-import java.math.BigInteger;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +23,7 @@ public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod")
-	private BigInteger cod;
+	private Long cod;
 	
 	@Column(name="nome")
 	private String name;
@@ -34,5 +32,5 @@ public class Person {
 	private String cpf;
 	
 	@Column(name="telefone")
-	private String telephone;
+	private String phoneNumber;
 }

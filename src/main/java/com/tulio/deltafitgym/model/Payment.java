@@ -1,7 +1,6 @@
 package com.tulio.deltafitgym.model;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -34,11 +33,11 @@ public class Payment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod")
-	private BigInteger cod;
+	private Long cod;
 	
 	@OneToOne
-	@JoinColumn(name="cod_cliente", nullable = false)
-	private Customer customer;
+	@JoinColumn(name="cod_membro", nullable = false)
+	private Member member;
 	
 	@Column(name = "dh_registro")
 	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
