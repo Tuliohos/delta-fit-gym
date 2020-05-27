@@ -16,4 +16,6 @@ public interface IEmployeeController {
 	public List<Employee> loadList(Employee member);
 
 	public Optional<Employee> findByCod(Long cod);
+
+	public Employee signIn(String email, String password);
 }

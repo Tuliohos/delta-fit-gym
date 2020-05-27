@@ -1,7 +1,7 @@
 package com.tulio.deltafitgym.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,9 +42,9 @@ public class Employee {
 	@JoinColumn(name="cod_usuario")
 	private User user;
 	
-	@Column(name = "data_contrato")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
-	private Date dateTimeHire;
+	@Column(name = "dh_contrato")
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	private LocalDateTime dateTimeHire;
 	
 	@Column(name="salario")
 	private BigDecimal salary;

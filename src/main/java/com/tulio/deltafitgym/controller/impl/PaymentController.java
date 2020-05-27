@@ -1,5 +1,6 @@
 package com.tulio.deltafitgym.controller.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tulio.deltafitgym.controller.IMemberController;
 import com.tulio.deltafitgym.controller.IPaymentController;
 import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Payment;
@@ -23,10 +25,14 @@ public class PaymentController implements IPaymentController{
 	@Autowired
 	private IPaymentRepository repository;
 	
+	@Autowired
+	private IMemberController memberController;
+	
 	@Override
 	@Transactional
 	public Payment save(Payment payment) {
 		this.validate(payment);
+		payment.setDateTimeRecord(LocalDateTime.now());
 		return repository.save(payment);
 	}
 	
@@ -69,8 +75,10 @@ public class PaymentController implements IPaymentController{
 	
 	private void validate(Payment payment) {
 		
-		if(payment.getMember() == null || payment.getMember().getCod() == null){
-			throw new LogicValidationException("Pagamento com usuário inválido");
+		if(payment.getMember() == null 
+				|| payment.getMember().getCod() == null
+				|| !memberController.findByCod(payment.getMember().getCod()).isPresent()){
+			throw new LogicValidationException("Pagamento com membro inválido");
 		}
 		
 		if(payment.getValue() == null){

@@ -1,6 +1,6 @@
 package com.tulio.deltafitgym.controller.impl;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class MemberController implements IMemberController{
 	@Transactional
 	public Member save(Member member) {
 		this.validate(member);
-		member.setDateTimeRegistration(new Date());
+		member.setDateTimeRegistration(LocalDateTime.now());
 		return repository.save(member);
 	}
 	
@@ -72,8 +72,6 @@ public class MemberController implements IMemberController{
 	}
 	
 	private void validate(Member member) {
-		
-		Objects.requireNonNull(member);
 		
 		if(member.getPerson() == null){
 			throw new LogicValidationException("Insira os dados pessoais.");

@@ -46,5 +46,6 @@ CREATE TABLE pagamento
   cod_membro bigint REFERENCES membro (cod) NOT NULL,
   dh_registro timestamp(0) without time zone default now(),
   valor numeric(16,2) NOT NULL,
+  tipo smallint NOT NULL,
   status smallint NOT NULL
 );

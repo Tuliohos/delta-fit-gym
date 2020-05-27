@@ -1,0 +1,601 @@
+{
+	"info": {
+		"_postman_id": "146ee3ce-56ef-4af1-82fa-b3f69a1bba60",
+		"name": "delta-fit-gym",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Membership",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\": \"Mensal\",\n\t\"price\": 49.90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/membership",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"membership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cod\": 3,\n\t\"description\": \"Semestral\",\n\t\"price\": 300\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/membership",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"membership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/membership/3",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"membership",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/membership?description=Anual&price=89.9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"membership"
+							],
+							"query": [
+								{
+									"key": "description",
+									"value": "Anual"
+								},
+								{
+									"key": "price",
+									"value": "89.9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByCod",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/membership/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"membership",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Member",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"person\":{\n\t\t\"name\": \"Túlio H\",\n\t\t\"cpf\": \"196.918.561-89\",\n\t\t\"phoneNumber\":\"3001-1889\"\n\t},\n\t\"membership\":{\n\t\t\"cod\": 1\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/member",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/member/4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cod\": 6,\n\t\"person\":{\n\t\t\"cod\": 9,\n\t\t\"name\": \"ATUALIZADO\",\n\t\t\"cpf\": \"00000\",\n\t\t\"phoneNumber\":\"3001-1889\"\n\t},\n\t\"membership\":{\n\t\t\"cod\": 1\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/member",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/member?membership=Mensal&name=Teste&cpf=100.100.100-10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member"
+							],
+							"query": [
+								{
+									"key": "membership",
+									"value": "Mensal"
+								},
+								{
+									"key": "name",
+									"value": "Teste"
+								},
+								{
+									"key": "cpf",
+									"value": "100.100.100-10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByCod",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/member/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"person\":{\n\t\t\"name\": \"Túlio H\",\n\t\t\"cpf\": \"200.230.561-89\",\n\t\t\"phoneNumber\":\"3001-1889\"\n\t},\n\t\"user\":{\n\t\t\"email\":\"tes22e2@email.com\",\n\t\t\"password\":\"123\"\n\t},\n\t\"salary\": 2000.52\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/employee",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signIn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8412c429-bdf2-4933-917c-0c821fc63cd7",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"teste2@email.com\",\n\t\"password\":\"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/employee/sign-in",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"employee",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\t\n\t\"cod\": 5,\n\t\"person\":{\n\t\t\"cod\":15,\n\t\t\"name\": \"Túlio H\",\n\t\t\"cpf\": \"900.230.561-89\",\n\t\t\"phoneNumber\":\"3001-1889\"\n\t},\n\t\"user\":{\n\t\t\"email\":\"testeedicao@email.com\",\n\t\t\"password\":\"123\"\n\t},\n\t\"salary\": 3212\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/employee",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/employee/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"employee",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/employee",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"employee"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Túlio",
+									"disabled": true
+								},
+								{
+									"key": "cpf",
+									"value": "220",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "teste2@email.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByCod",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/employee/4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"employee",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"member\":{\n\t\t\"cod\": 5\n\t},\n\t\"value\": 1000,\n\t\"status\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/payment",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadByCod",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/payment/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"cod\": 3,\r\n        \"member\": {\r\n            \"cod\": 5,\r\n            \"person\": {\r\n                \"cod\": 3,\r\n                \"name\": \"Túlio H\",\r\n                \"cpf\": \"196.918.561-89\",\r\n                \"phoneNumber\": \"3001-1889\"\r\n            },\r\n            \"membership\": {\r\n                \"cod\": 1,\r\n                \"description\": \"Anual\",\r\n                \"price\": 89.9\r\n            },\r\n            \"dateTimeRegistration\": null\r\n        },\r\n        \"dateTimeRecord\": [\r\n            2019,\r\n            6,\r\n            12,\r\n            14,\r\n            57,\r\n            27\r\n        ],\r\n        \"value\": 1000.00,\r\n        \"status\": \"CANCELED\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/payment",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/payment/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/payment?dateTimeRecord=2019-06-12",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payment"
+							],
+							"query": [
+								{
+									"key": "memberName",
+									"value": "Tú",
+									"disabled": true
+								},
+								{
+									"key": "memberCpf",
+									"value": "000",
+									"disabled": true
+								},
+								{
+									"key": "dateTimeRecord",
+									"value": "2019-06-12"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c599c8f4-8a55-49af-aa66-da1c56a58bcd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "acb8dbd2-b6e3-49c1-9fb7-e9dac26903d1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "8bfc79de-0b68-4635-890a-956896aa8a27",
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

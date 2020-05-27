@@ -1,6 +1,6 @@
 package com.tulio.deltafitgym.controller.impl;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 
 import com.tulio.deltafitgym.controller.IEmployeeController;
 import com.tulio.deltafitgym.controller.IPersonController;
+import com.tulio.deltafitgym.exception.AuthenticationErrorException;
 import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Employee;
 import com.tulio.deltafitgym.repository.IEmployeeRepository;
@@ -29,9 +30,25 @@ public class EmployeeController implements IEmployeeController{
 	private IPersonController personController;
 	
 	@Override
+	public Employee signIn(String email, String password) {
+		Optional<Employee> employee = repository.findByUserEmail(email);
+		
+		if(!employee.isPresent()) {
+			throw new AuthenticationErrorException("Usuário não encontrado para o e-mail informado.");
+		}
+		
+		if(!employee.get().getUser().getPassword().equals(password)) {
+			throw new AuthenticationErrorException("Senha inválida.");
+		}
+		
+		return employee.get();
+	}
+	
+	@Override
 	@Transactional
 	public Employee save(Employee employee) {
 		this.validate(employee);
+		employee.setDateTimeHire(LocalDateTime.now());
 		return repository.save(employee);
 	}
 	
@@ -40,7 +57,6 @@ public class EmployeeController implements IEmployeeController{
 	public Employee update(Employee employee) {
 		this.validate(employee);
 		Objects.requireNonNull(employee.getCod(), "Erro ao atualizar funcionário.");
-		employee.setDateTimeHire(new Date());
 		return repository.save(employee);
 	}
 
@@ -73,8 +89,6 @@ public class EmployeeController implements IEmployeeController{
 	
 	private void validate(Employee employee) {
 		
-		Objects.requireNonNull(employee);
-		
 		if(employee.getPerson() == null){
 			throw new LogicValidationException("Insira os dados pessoais.");
 		}
@@ -92,7 +106,17 @@ public class EmployeeController implements IEmployeeController{
 		}
 		
 		if(personController.existsByCpf(employee.getPerson().getCpf())) {
-			throw new LogicValidationException("Já existe um usuário cadastrado com este CPF.");
+			Optional<Employee> existingEmployee = repository.findByPersonCpf((employee.getPerson().getCpf()));
+			if(employee.getCod() == null || existingEmployee.isPresent() && existingEmployee.get().getCod() != employee.getCod()) {				
+				throw new LogicValidationException("Já existe um usuário cadastrado com este CPF.");
+			}
+		}
+		
+		if(employee.getUser() != null) {
+			Optional<Employee> existingEmployee = repository.findByUserEmail(employee.getUser().getEmail());
+			if(existingEmployee.isPresent() && !existingEmployee.get().getCod().equals(employee.getCod())) {
+				throw new LogicValidationException("Este e-mail já está cadastrado.");
+			}
 		}
 		
 		if(employee.getSalary() == null){

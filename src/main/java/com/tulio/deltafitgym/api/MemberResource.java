@@ -1,7 +1,6 @@
 package com.tulio.deltafitgym.api;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tulio.deltafitgym.controller.IMemberController;
-import com.tulio.deltafitgym.controller.IMembershipController;
 import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Member;
 import com.tulio.deltafitgym.model.Membership;
@@ -29,9 +27,6 @@ public class MemberResource {
 	
 	@Autowired
 	private IMemberController controller;
-	
-	@Autowired
-	private IMembershipController membershipController;
 	
 	@PostMapping
 	public ResponseEntity<Object> save(@RequestBody Member member){

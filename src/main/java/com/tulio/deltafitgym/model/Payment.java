@@ -1,7 +1,7 @@
 package com.tulio.deltafitgym.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import com.tulio.deltafitgym.model.enums.EnumPaymentStatus;
+import com.tulio.deltafitgym.model.enums.EnumPaymentType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,12 +41,15 @@ public class Payment {
 	private Member member;
 	
 	@Column(name = "dh_registro")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
-	private Date dateTimeRecord;
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	private LocalDateTime dateTimeRecord;
 	
 	@Column(name="valor", nullable = false)
 	private BigDecimal value;
 	
 	@Column(name="status", nullable = false)
 	private EnumPaymentStatus status;
+	
+	@Column(name="tipo", nullable = false)
+	private EnumPaymentType type;
 }

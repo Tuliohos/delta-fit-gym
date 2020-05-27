@@ -21,6 +21,7 @@ import com.tulio.deltafitgym.model.Member;
 import com.tulio.deltafitgym.model.Payment;
 import com.tulio.deltafitgym.model.Person;
 import com.tulio.deltafitgym.model.enums.EnumPaymentStatus;
+import com.tulio.deltafitgym.model.enums.EnumPaymentType;
 
 @RestController
 @RequestMapping("/api/payment")
@@ -64,11 +65,15 @@ public class PaymentResource {
 			@RequestParam(value = "status", required = false) String status,
 			@RequestParam(value = "memberName", required = false) String memberName,
 			@RequestParam(value = "memberCpf", required = false) String memberCpf,
+			@RequestParam(value = "type", required = false) Integer type,
 			@RequestParam(value = "dateTimeRecord", required = false) String dateTimeRecord) {
 		
 		Person person = Person.builder().name(memberName).cpf(memberCpf).build();
 		Member member = Member.builder().person(person).build();
-		Payment payment = Payment.builder().member(member).status(EnumPaymentStatus.valueOf(status)).build();
+		Payment payment = Payment.builder()
+				.type(EnumPaymentType.valueOf(type.toString()))
+				.member(member)
+				.status(status != null ? EnumPaymentStatus.valueOf(status) : null).build();
 		
 		List<Payment> payments = controller.loadList(payment);
 		return ResponseEntity.ok(payments);
