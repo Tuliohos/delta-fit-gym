@@ -76,7 +76,7 @@ public class EmployeeResource {
 			@RequestParam(value = "email", required = false) String email) {
 		
 		Person person = Person.builder().name(name).cpf(cpf).build();
-		User user = User.builder().email(email).build();
+		User user = email != null ? User.builder().email(email).build() : null;
 		Employee employee = Employee.builder().person(person).user(user).build();
 		
 		List<Employee> employees = controller.loadList(employee);
