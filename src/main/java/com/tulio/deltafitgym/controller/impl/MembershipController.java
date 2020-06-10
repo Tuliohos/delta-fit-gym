@@ -69,12 +69,19 @@ public class MembershipController implements IMembershipController{
 		
 		if(membership.getDescription() == null || StringUtils.isEmpty(membership.getDescription())) {
 			throw new LogicValidationException("Informe uma descrição válida");
-		}else if(repository.existsByDescription(membership.getDescription())){
-			throw new LogicValidationException("Já existe um plano cadastrado com esta descrição");
+		}
+		
+		Optional<Membership> existingMembership = repository.findByDescription(membership.getDescription());
+		if(existingMembership.isPresent() && (membership.getCod() == null || existingMembership.isPresent() && existingMembership.get().getCod() != membership.getCod())) {				
+			throw new LogicValidationException("Já existe um plano de usuário cadastrado com esta descrição.");
 		}
 		
 		if(membership.getPrice() == null) {
 			throw new LogicValidationException("Informe um preço válido");
+		}
+		
+		if(membership.getPrice() > Double.valueOf(9000)) {
+			throw new LogicValidationException("Preço muito alto para um plano de usuário.");
 		}
 	}
 }

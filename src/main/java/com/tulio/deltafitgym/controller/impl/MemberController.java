@@ -86,7 +86,7 @@ public class MemberController implements IMemberController{
 		}
 		
 		if(personController.existsByCpf(member.getPerson().getCpf())) {
-			Optional<Member> existingMember = repository.findByPersonCpf((member.getPerson().getCpf()));
+			Optional<Member> existingMember = repository.findByPersonCpf(member.getPerson().getCpf());
 			if(member.getCod() == null || existingMember.isPresent() && existingMember.get().getCod() != member.getCod()) {				
 				throw new LogicValidationException("Já existe um usuário cadastrado com este CPF.");
 			}

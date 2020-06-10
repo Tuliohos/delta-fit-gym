@@ -59,8 +59,8 @@ public class EmployeeResource {
 		}
 	}
 	
-	@DeleteMapping("{id}")
-	public ResponseEntity<String> delete(@PathVariable("id") Long cod){
+	@DeleteMapping("{cod}")
+	public ResponseEntity<String> delete(@PathVariable("cod") Long cod){
 		try {
 			controller.delete(cod);
 			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
@@ -83,8 +83,8 @@ public class EmployeeResource {
 		return ResponseEntity.ok(employees);
 	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity<Object> findByCod(@PathVariable("id") Long cod) {
+	@GetMapping("{cod}")
+	public ResponseEntity<Object> findByCod(@PathVariable("cod") Long cod) {
 		return controller.findByCod(cod)
 				.map(employee -> new ResponseEntity<Object>(employee, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<Object>(HttpStatus.NOT_FOUND));
