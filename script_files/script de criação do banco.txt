@@ -20,6 +20,7 @@ CREATE TABLE plano
 (
   cod bigserial NOT NULL PRIMARY KEY,
   descricao character varying(200) NOT NULL,
+  dh_cadastro timestamp(0) without time zone default now(),
   valor numeric(6,2) NOT NULL
 );
 
@@ -43,6 +44,7 @@ CREATE TABLE funcionario
 CREATE TABLE pagamento
 (
   cod bigserial NOT NULL PRIMARY KEY,
+  descricao character varying(100) NOT NULL,
   cod_membro bigint REFERENCES membro (cod) NOT NULL,
   dh_registro timestamp(0) without time zone default now(),
   valor numeric(16,2) NOT NULL,

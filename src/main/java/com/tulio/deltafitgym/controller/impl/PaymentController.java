@@ -1,6 +1,8 @@
 package com.tulio.deltafitgym.controller.impl;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,6 +18,7 @@ import com.tulio.deltafitgym.controller.IMemberController;
 import com.tulio.deltafitgym.controller.IPaymentController;
 import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Payment;
+import com.tulio.deltafitgym.model.dto.PaymentDTO;
 import com.tulio.deltafitgym.model.enums.EnumPaymentStatus;
 import com.tulio.deltafitgym.repository.IPaymentRepository;
 
@@ -59,13 +62,37 @@ public class PaymentController implements IPaymentController{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Payment> loadList(Payment payment) {
-		Example<Payment> example = Example.of( payment, 
+	public List<PaymentDTO> loadList(Payment paymentFilter) {
+		Example<Payment> example = Example.of( paymentFilter, 
 				ExampleMatcher.matching()
 				.withIgnoreCase()
 				.withStringMatcher( StringMatcher.CONTAINING ) );
-
-		return repository.findAll(example);
+		
+		List<Payment> paymentList = repository.findAll(example);
+		return paymentDTOListBuilder(paymentList);
+	}
+	
+	private List<PaymentDTO> paymentDTOListBuilder(List<Payment> paymentList){
+		
+		List<PaymentDTO> paymentDTOList = new ArrayList<>();
+		if(paymentList != null && Boolean.FALSE.equals(paymentList.isEmpty())) {
+			paymentList.stream().forEach( payment -> {
+				
+				PaymentDTO paymentdto = PaymentDTO.builder()
+						.cod(payment.getCod())
+						.description(payment.getDescription())
+						.memberName(payment.getMember().getPerson().getName())
+						.dateTimeRecord( payment.getDateTimeRecord().format( DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss") ))
+						.value( payment.getValue())
+						.status( payment.getStatus().getDescription())
+						.type( payment.getType().getDescription() )
+						.build();
+				
+				paymentDTOList.add(paymentdto);
+			});
+		}
+		
+		return paymentDTOList;
 	}
 	
 	@Override

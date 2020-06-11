@@ -1,6 +1,8 @@
 package com.tulio.deltafitgym.controller.impl;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,6 +19,7 @@ import com.tulio.deltafitgym.controller.IMemberController;
 import com.tulio.deltafitgym.controller.IPersonController;
 import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Member;
+import com.tulio.deltafitgym.model.dto.MemberDTO;
 import com.tulio.deltafitgym.repository.IMemberRepository;
 
 @Service
@@ -57,13 +60,33 @@ public class MemberController implements IMemberController{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Member> loadList(Member member) {
+	public List<MemberDTO> loadList(Member member) {
 		Example<Member> example = Example.of( member, 
 				ExampleMatcher.matching()
 				.withIgnoreCase()
 				.withStringMatcher( StringMatcher.CONTAINING ) );
 		
-		return repository.findAll(example);
+		List<Member> memberList = repository.findAll(example);
+		return memberDTOListBuilder(memberList);
+	}
+	
+	private List<MemberDTO> memberDTOListBuilder(List<Member> memberList){
+		
+		List<MemberDTO> memberDTOList = new ArrayList<>();
+		memberList.stream().forEach(member -> {
+			
+			MemberDTO memberDTO = MemberDTO.builder()
+					.cod( member.getCod() )
+					.name( member.getPerson().getName() )
+					.cpf( member.getPerson().getCpf() )
+					.membership( member.getMembership().getDescription() )
+					.dateTimeRegistration( member.getDateTimeRegistration().format( DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss") ))
+					.build();
+			
+			memberDTOList.add(memberDTO);
+		});
+		
+		return memberDTOList;
 	}
 	
 	@Override

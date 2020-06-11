@@ -1,6 +1,8 @@
 package com.tulio.deltafitgym.controller.impl;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,6 +20,7 @@ import com.tulio.deltafitgym.controller.IPersonController;
 import com.tulio.deltafitgym.exception.AuthenticationErrorException;
 import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Employee;
+import com.tulio.deltafitgym.model.dto.EmployeeDTO;
 import com.tulio.deltafitgym.repository.IEmployeeRepository;
 
 @Service
@@ -73,13 +76,32 @@ public class EmployeeController implements IEmployeeController{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Employee> loadList(Employee employee) {
-		Example<Employee> example = Example.of( employee, 
+	public List<EmployeeDTO> loadList(Employee employeeFilter) {
+		Example<Employee> example = Example.of( employeeFilter, 
 				ExampleMatcher.matching()
 				.withIgnoreCase()
 				.withStringMatcher( StringMatcher.CONTAINING ) );
 		
-		return repository.findAll(example);
+		List<Employee> employeeList = repository.findAll(example);
+		return employeeDTOListBuilder(employeeList);
+	}
+	
+	private List<EmployeeDTO> employeeDTOListBuilder(List<Employee> employeeList){
+		
+		List<EmployeeDTO> employeeDTOList = new ArrayList<>();
+		employeeList.stream().forEach(employee -> {
+			
+			EmployeeDTO employeeDTO = EmployeeDTO.builder()
+					.cod( employee.getCod() )
+					.name( employee.getPerson().getName() )
+					.email( employee.getUser() != null ? employee.getUser().getEmail() : "N/D")
+					.dateTimeHire( employee.getDateTimeHire().format( DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss") ))
+					.build();
+			
+			employeeDTOList.add(employeeDTO);
+		});
+		
+		return employeeDTOList;
 	}
 	
 	@Override
@@ -88,7 +110,7 @@ public class EmployeeController implements IEmployeeController{
 	}
 	
 	private void validate(Employee employee) {
-		
+				
 		if(employee.getPerson() == null){
 			throw new LogicValidationException("Insira os dados pessoais.");
 		}
@@ -113,6 +135,14 @@ public class EmployeeController implements IEmployeeController{
 		}
 		
 		if(employee.getUser() != null) {
+			if(employee.getUser() != null && StringUtils.isEmpty(employee.getUser().getEmail())) {
+				throw new LogicValidationException("Insira o e-mail.");
+			}
+			
+			if(employee.getUser() != null && StringUtils.isEmpty(employee.getUser().getPassword())) {
+				throw new LogicValidationException("Insira a senha.");
+			}
+			
 			Optional<Employee> existingEmployee = repository.findByUserEmail(employee.getUser().getEmail());
 			if(existingEmployee.isPresent() && !existingEmployee.get().getCod().equals(employee.getCod())) {
 				throw new LogicValidationException("Este e-mail já está cadastrado.");

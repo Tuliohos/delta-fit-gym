@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.tulio.deltafitgym.model.Employee;
+import com.tulio.deltafitgym.model.dto.EmployeeDTO;
 
 public interface IEmployeeController {
 
@@ -13,7 +14,7 @@ public interface IEmployeeController {
 
 	public void delete(Long memberCod);
 
-	public List<Employee> loadList(Employee member);
+	public List<EmployeeDTO> loadList(Employee member);
 
 	public Optional<Employee> findByCod(Long cod);
 

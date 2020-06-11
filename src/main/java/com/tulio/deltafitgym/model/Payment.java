@@ -36,6 +36,9 @@ public class Payment {
 	@Column(name="cod")
 	private Long cod;
 	
+	@Column(name="descricao", nullable = false)
+	private String description;
+	
 	@OneToOne
 	@JoinColumn(name="cod_membro", nullable = false)
 	private Member member;

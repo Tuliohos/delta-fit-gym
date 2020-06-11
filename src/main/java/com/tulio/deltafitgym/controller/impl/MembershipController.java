@@ -1,5 +1,6 @@
 package com.tulio.deltafitgym.controller.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class MembershipController implements IMembershipController{
 	@Transactional
 	public Membership save(Membership membership) {
 		this.validate(membership);
+		membership.setDateTimeRegistration(LocalDateTime.now());
 		return repository.save(membership);
 	}
 	

@@ -21,6 +21,7 @@ import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Employee;
 import com.tulio.deltafitgym.model.Person;
 import com.tulio.deltafitgym.model.User;
+import com.tulio.deltafitgym.model.dto.EmployeeDTO;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -70,16 +71,16 @@ public class EmployeeResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Employee>> loadList(
+	public ResponseEntity<List<EmployeeDTO>> loadList(
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "cpf", required = false) String cpf,
 			@RequestParam(value = "email", required = false) String email) {
 		
 		Person person = Person.builder().name(name).cpf(cpf).build();
 		User user = email != null ? User.builder().email(email).build() : null;
-		Employee employee = Employee.builder().person(person).user(user).build();
+		Employee employeeFilter = Employee.builder().person(person).user(user).build();
 		
-		List<Employee> employees = controller.loadList(employee);
+		List<EmployeeDTO> employees = controller.loadList(employeeFilter);
 		return ResponseEntity.ok(employees);
 	}
 	

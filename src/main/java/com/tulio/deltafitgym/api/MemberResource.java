@@ -20,6 +20,7 @@ import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Member;
 import com.tulio.deltafitgym.model.Membership;
 import com.tulio.deltafitgym.model.Person;
+import com.tulio.deltafitgym.model.dto.MemberDTO;
 
 @RestController
 @RequestMapping("/api/member")
@@ -59,7 +60,7 @@ public class MemberResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Member>> loadList(
+	public ResponseEntity<List<MemberDTO>> loadList(
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "cpf", required = false) String cpf,
 			@RequestParam(value = "membership", required = false) String membershipDescription) {
@@ -68,7 +69,7 @@ public class MemberResource {
 		Membership membership = Membership.builder().description(membershipDescription).build();
 		Member member = Member.builder().person(person).membership(membership).build();
 		
-		List<Member> members = controller.loadList(member);
+		List<MemberDTO> members = controller.loadList(member);
 		return ResponseEntity.ok(members);
 	}
 	

@@ -20,6 +20,7 @@ import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Member;
 import com.tulio.deltafitgym.model.Payment;
 import com.tulio.deltafitgym.model.Person;
+import com.tulio.deltafitgym.model.dto.PaymentDTO;
 import com.tulio.deltafitgym.model.enums.EnumPaymentStatus;
 import com.tulio.deltafitgym.model.enums.EnumPaymentType;
 
@@ -61,21 +62,20 @@ public class PaymentResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Payment>> loadList(
+	public ResponseEntity<List<PaymentDTO>> loadList(
 			@RequestParam(value = "status", required = false) String status,
 			@RequestParam(value = "memberName", required = false) String memberName,
-			@RequestParam(value = "memberCpf", required = false) String memberCpf,
 			@RequestParam(value = "type", required = false) Integer type,
 			@RequestParam(value = "dateTimeRecord", required = false) String dateTimeRecord) {
 		
-		Person person = Person.builder().name(memberName).cpf(memberCpf).build();
+		Person person = Person.builder().name(memberName).build();
 		Member member = Member.builder().person(person).build();
 		Payment payment = Payment.builder()
-				.type(EnumPaymentType.valueOf(type.toString()))
+				.type(type != null ? EnumPaymentType.valueOf(type.toString()) : null)
 				.member(member)
 				.status(status != null ? EnumPaymentStatus.valueOf(status) : null).build();
 		
-		List<Payment> payments = controller.loadList(payment);
+		List<PaymentDTO> payments = controller.loadList(payment);
 		return ResponseEntity.ok(payments);
 	}
 	
