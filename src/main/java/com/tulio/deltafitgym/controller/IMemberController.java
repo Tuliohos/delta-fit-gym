@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.tulio.deltafitgym.model.Member;
 import com.tulio.deltafitgym.model.dto.MemberDTO;
+import com.tulio.deltafitgym.model.dto.MembersGenderChartDTO;
 
 public interface IMemberController {
 
@@ -18,4 +19,5 @@ public interface IMemberController {
 
 	public Optional<Member> findByCod(Long cod);
 
+	public List<MembersGenderChartDTO> getMembersGenderChartData();
 }

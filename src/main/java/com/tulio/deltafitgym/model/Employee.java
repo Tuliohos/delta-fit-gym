@@ -48,5 +48,8 @@ public class Employee {
 	
 	@Column(name="salario")
 	private BigDecimal salary;
+	
+	@Column(name="cargo")
+	private String position;
 
 }

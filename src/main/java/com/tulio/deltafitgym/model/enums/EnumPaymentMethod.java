@@ -3,7 +3,7 @@ package com.tulio.deltafitgym.model.enums;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum EnumPaymentType {
+public enum EnumPaymentMethod {
 
 	CASH(0, "Dinheiro"),
 	CREDIT_CARD(1, "Cartão de Crédito"),

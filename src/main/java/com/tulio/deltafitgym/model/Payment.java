@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import com.tulio.deltafitgym.model.enums.EnumPaymentStatus;
-import com.tulio.deltafitgym.model.enums.EnumPaymentType;
+import com.tulio.deltafitgym.model.enums.EnumPaymentMethod;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,6 +53,6 @@ public class Payment {
 	@Column(name="status", nullable = false)
 	private EnumPaymentStatus status;
 	
-	@Column(name="tipo", nullable = false)
-	private EnumPaymentType type;
+	@Column(name="forma", nullable = false)
+	private EnumPaymentMethod method;
 }

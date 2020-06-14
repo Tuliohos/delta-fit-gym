@@ -6,9 +6,8 @@ import lombok.AllArgsConstructor;
 public enum EnumPaymentStatus {
 	
 	PENDING(0, "Pendente"),
-	EFFECTIVE(1, "Efetivado"),
-	LATE(2, "Atrasado"),
-	CANCELED(3, "Cancelado");
+	COMPLETED(1, "Efetivado"),
+	CANCELED(2, "Cancelado");
 	
 	private Integer value;
 	private String description;

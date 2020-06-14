@@ -96,6 +96,7 @@ public class EmployeeController implements IEmployeeController{
 					.name( employee.getPerson().getName() )
 					.email( employee.getUser() != null ? employee.getUser().getEmail() : "N/D")
 					.dateTimeHire( employee.getDateTimeHire().format( DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss") ))
+					.position( employee.getPosition() )
 					.build();
 			
 			employeeDTOList.add(employeeDTO);
@@ -110,22 +111,8 @@ public class EmployeeController implements IEmployeeController{
 	}
 	
 	private void validate(Employee employee) {
-				
-		if(employee.getPerson() == null){
-			throw new LogicValidationException("Insira os dados pessoais.");
-		}
-		
-		if(employee.getPerson() == null){
-			throw new LogicValidationException("Insira os dados pessoais.");
-		}
-		
-		if(employee.getPerson().getName() == null || StringUtils.isEmpty(employee.getPerson().getName())){
-			throw new LogicValidationException("Insira um nome válido.");
-		}
-		
-		if(employee.getPerson().getCpf() == null || StringUtils.isEmpty(employee.getPerson().getCpf())){
-			throw new LogicValidationException("Insira um CPF válido.");
-		}
+
+		personController.validate(employee.getPerson());
 		
 		if(personController.existsByCpf(employee.getPerson().getCpf())) {
 			Optional<Employee> existingEmployee = repository.findByPersonCpf((employee.getPerson().getCpf()));
@@ -151,6 +138,10 @@ public class EmployeeController implements IEmployeeController{
 		
 		if(employee.getSalary() == null){
 			throw new LogicValidationException("Insira um salário válido.");
+		}
+		
+		if(employee.getPosition() == null || StringUtils.isEmpty(employee.getPosition())) {
+			throw new LogicValidationException("Insira um cargo válido.");
 		}
 		
 	}

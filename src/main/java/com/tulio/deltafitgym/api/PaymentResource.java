@@ -20,9 +20,10 @@ import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Member;
 import com.tulio.deltafitgym.model.Payment;
 import com.tulio.deltafitgym.model.Person;
+import com.tulio.deltafitgym.model.dto.MonthlyEarningsChartDTO;
 import com.tulio.deltafitgym.model.dto.PaymentDTO;
+import com.tulio.deltafitgym.model.enums.EnumPaymentMethod;
 import com.tulio.deltafitgym.model.enums.EnumPaymentStatus;
-import com.tulio.deltafitgym.model.enums.EnumPaymentType;
 
 @RestController
 @RequestMapping("/api/payment")
@@ -65,13 +66,13 @@ public class PaymentResource {
 	public ResponseEntity<List<PaymentDTO>> loadList(
 			@RequestParam(value = "status", required = false) String status,
 			@RequestParam(value = "memberName", required = false) String memberName,
-			@RequestParam(value = "type", required = false) Integer type,
+			@RequestParam(value = "type", required = false) Integer method,
 			@RequestParam(value = "dateTimeRecord", required = false) String dateTimeRecord) {
 		
 		Person person = Person.builder().name(memberName).build();
 		Member member = Member.builder().person(person).build();
 		Payment payment = Payment.builder()
-				.type(type != null ? EnumPaymentType.valueOf(type.toString()) : null)
+				.method(method != null ? EnumPaymentMethod.valueOf(method.toString()) : null)
 				.member(member)
 				.status(status != null ? EnumPaymentStatus.valueOf(status) : null).build();
 		
@@ -85,5 +86,17 @@ public class PaymentResource {
 				.map(payment -> new ResponseEntity<Object>(payment, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<Object>(HttpStatus.NOT_FOUND));
 	}
-
+	
+	@GetMapping("/years")
+	public  ResponseEntity<List<String>> getYearsList(){
+		List<String> years = controller.getYearsList();
+		return ResponseEntity.ok(years);
+	}
+	
+	@GetMapping("/earnings/{year}")
+	public ResponseEntity<List<MonthlyEarningsChartDTO>> getMonthlyEarningsChartData(@PathVariable("year") Integer yearFilter){
+		List<MonthlyEarningsChartDTO> monthlyEarnings = controller.getMonthlyEarningsChartData(yearFilter);
+		return ResponseEntity.ok(monthlyEarnings);
+	}
+	
 }

@@ -18,6 +18,7 @@ import com.tulio.deltafitgym.controller.IMemberController;
 import com.tulio.deltafitgym.controller.IPaymentController;
 import com.tulio.deltafitgym.exception.LogicValidationException;
 import com.tulio.deltafitgym.model.Payment;
+import com.tulio.deltafitgym.model.dto.MonthlyEarningsChartDTO;
 import com.tulio.deltafitgym.model.dto.PaymentDTO;
 import com.tulio.deltafitgym.model.enums.EnumPaymentStatus;
 import com.tulio.deltafitgym.repository.IPaymentRepository;
@@ -85,7 +86,7 @@ public class PaymentController implements IPaymentController{
 						.dateTimeRecord( payment.getDateTimeRecord().format( DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss") ))
 						.value( payment.getValue())
 						.status( payment.getStatus().getDescription())
-						.type( payment.getType().getDescription() )
+						.method( payment.getMethod().getDescription() )
 						.build();
 				
 				paymentDTOList.add(paymentdto);
@@ -98,6 +99,16 @@ public class PaymentController implements IPaymentController{
 	@Override
 	public Optional<Payment> findByCod(Long cod){
 		return repository.findById(cod);
+	}
+	
+	@Override
+	public List<String> getYearsList(){
+		return repository.getYearsList(EnumPaymentStatus.COMPLETED);
+	}
+	
+	@Override
+	public List<MonthlyEarningsChartDTO> getMonthlyEarningsChartData(Integer yearFilter) {
+		return this.repository.getMonthlyEarningsChartData(yearFilter, EnumPaymentStatus.COMPLETED);
 	}
 	
 	private void validate(Payment payment) {
@@ -116,4 +127,5 @@ public class PaymentController implements IPaymentController{
 			throw new LogicValidationException("Pagamento com status inválido");
 		}
 	}
+
 }

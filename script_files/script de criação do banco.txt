@@ -4,8 +4,9 @@ CREATE DATABASE delta_fit_gym;
 CREATE TABLE pessoa
 (
   cod bigserial NOT NULL PRIMARY KEY,
-  nome character varying(200),
-  cpf char(14),
+  nome character varying(200) NOT NULL,
+  cpf char(14) NOT NULL,
+  genero character varying(2) CHECK (genero in ('M', 'F', 'I')) NOT NULL,
   telefone character varying(15) 
 );
 
@@ -37,6 +38,7 @@ CREATE TABLE funcionario
   cod bigserial NOT NULL PRIMARY KEY,
   cod_pessoa bigint REFERENCES pessoa (cod),
   cod_usuario bigint REFERENCES usuario (cod),
+  cargo character varying(100) NOT NULL,
   dh_contrato timestamp(0) without time zone default now(),
   salario numeric(10,2) NOT NULL
 );
@@ -48,6 +50,6 @@ CREATE TABLE pagamento
   cod_membro bigint REFERENCES membro (cod) NOT NULL,
   dh_registro timestamp(0) without time zone default now(),
   valor numeric(16,2) NOT NULL,
-  tipo smallint NOT NULL,
+  forma smallint NOT NULL,
   status smallint NOT NULL
 );

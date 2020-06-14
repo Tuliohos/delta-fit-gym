@@ -19,5 +19,5 @@ public class PaymentDTO {
 	private String dateTimeRecord;
 	private BigDecimal value;
 	private String status;
-	private String type;
+	private String method;
 }

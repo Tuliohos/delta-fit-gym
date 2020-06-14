@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.tulio.deltafitgym.model.Payment;
+import com.tulio.deltafitgym.model.dto.MonthlyEarningsChartDTO;
 import com.tulio.deltafitgym.model.dto.PaymentDTO;
 
 public interface IPaymentController {
@@ -17,4 +18,9 @@ public interface IPaymentController {
 	public List<PaymentDTO> loadList(Payment member);
 
 	public Optional<Payment> findByCod(Long cod);
+
+	public List<String> getYearsList();
+	
+	public List<MonthlyEarningsChartDTO> getMonthlyEarningsChartData(Integer yearFilter);
+
 }

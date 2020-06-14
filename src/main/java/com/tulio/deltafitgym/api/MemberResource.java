@@ -21,6 +21,7 @@ import com.tulio.deltafitgym.model.Member;
 import com.tulio.deltafitgym.model.Membership;
 import com.tulio.deltafitgym.model.Person;
 import com.tulio.deltafitgym.model.dto.MemberDTO;
+import com.tulio.deltafitgym.model.dto.MembersGenderChartDTO;
 
 @RestController
 @RequestMapping("/api/member")
@@ -78,5 +79,11 @@ public class MemberResource {
 		return controller.findByCod(cod)
 				.map(member -> new ResponseEntity<Object>(member, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<Object>(HttpStatus.NOT_FOUND));
+	}
+	
+	@GetMapping("/genders-chart")
+	public ResponseEntity<List<MembersGenderChartDTO>> getMembersGenderChartData() {
+		List<MembersGenderChartDTO> membersGenderChartData = controller.getMembersGenderChartData();
+		return ResponseEntity.ok(membersGenderChartData);
 	}
 }
