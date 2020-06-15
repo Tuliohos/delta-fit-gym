@@ -85,8 +85,8 @@ public class PaymentController implements IPaymentController{
 						.memberName(payment.getMember().getPerson().getName())
 						.dateTimeRecord( payment.getDateTimeRecord().format( DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss") ))
 						.value( payment.getValue())
-						.status( payment.getStatus().getDescription())
-						.method( payment.getMethod().getDescription() )
+						.status( payment.getStatus())
+						.method( payment.getMethod())
 						.build();
 				
 				paymentDTOList.add(paymentdto);

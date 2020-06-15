@@ -2,6 +2,9 @@ package com.tulio.deltafitgym.model.dto;
 
 import java.math.BigDecimal;
 
+import com.tulio.deltafitgym.model.enums.EnumPaymentMethod;
+import com.tulio.deltafitgym.model.enums.EnumPaymentStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +21,6 @@ public class PaymentDTO {
 	private String memberName;
 	private String dateTimeRecord;
 	private BigDecimal value;
-	private String status;
-	private String method;
+	private EnumPaymentStatus status;
+	private EnumPaymentMethod method;
 }

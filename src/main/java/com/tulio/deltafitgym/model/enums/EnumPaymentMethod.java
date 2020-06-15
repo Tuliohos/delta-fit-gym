@@ -5,15 +5,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum EnumPaymentMethod {
 
-	CASH(0, "Dinheiro"),
-	CREDIT_CARD(1, "Cartão de Crédito"),
-	PICPAY(2, "Picpay");
+	CASH(0),
+	CREDIT_CARD(1),
+	PICPAY(2);
 	
 	private Integer value;
-	private String description;
 	
 	public Integer getValue() { return this.value; }
-
-	public String getDescription() { return description; }
 	
 }
